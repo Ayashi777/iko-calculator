@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: IKO Roof Calculator
- * Description: Provides a roof calculator shortcode using ACF.
+ * Plugin Name: IKO Калкулатор за покрив
+ * Description: Предоставя кратък код за калкулатор на покрив, използващ ACF.
  * Version: 1.0.4
  */
 
@@ -11,11 +11,11 @@ define('IKO_CALCULATOR_URL', plugin_dir_url(__FILE__));
 //    wp_enqueue_style('iko-roof-calculator-style', IKO_CALCULATOR_URL . 'style.css', [], '1.0.0');
 //});
 
-// 1. Додаємо сторінку налаштувань ACF
+// 1. Добавяме страница с настройки на ACF
 if(function_exists('acf_add_options_page')) {
     acf_add_options_page(array(
-        'page_title'    => 'IKO New Roof Calculator Settings',
-        'menu_title'    => 'IKO Calculator',
+        'page_title'    => 'Настройки на IKO Калкулатор за нов покрив',
+        'menu_title'    => 'IKO Калкулатор',
         'menu_slug'     => 'iko-new-calculator-settings',
         'capability'    => 'manage_options',
         'icon_url'      => 'dashicons-calculator',
@@ -23,34 +23,34 @@ if(function_exists('acf_add_options_page')) {
     ));
 }
 
-// 1. Реєстрація полів ACF
+// 1. Регистрация на полета на ACF
 add_action('acf/init', 'register_iko_calculator_fields');
 function register_iko_calculator_fields() {
     if (!function_exists('acf_add_local_field_group')) return;
 
-    // Група полів для колекцій черепиці
+    // Група полета за колекции керемиди
     acf_add_local_field_group(array(
         'key' => 'group_iko_shingles',
-        'title' => 'IKO Shingle Collections',
+        'title' => 'Колекции битумни керемиди IKO',
         'fields' => array(
             array(
                 'key' => 'field_iko_shingles',
-                'label' => 'Колекції черепиці',
+                'label' => 'Колекции керемиди',
                 'name' => 'iko_shingles',
                 'type' => 'repeater',
                 'layout' => 'table',
-                'button_label' => 'Додати колекцію',
+                'button_label' => 'Добави колекция',
                 'sub_fields' => array(
                     array(
                         'key' => 'field_shingle_name',
-                        'label' => 'Назва колекції',
+                        'label' => 'Име на колекцията',
                         'name' => 'name',
                         'type' => 'text',
                         'required' => 1
                     ),
                     array(
                         'key' => 'field_main_coef',
-                        'label' => 'Коефіцієнт (основа)',
+                        'label' => 'Коефициент (основа)',
                         'name' => 'main_coef',
                         'type' => 'number',
                         'step' => '0.01',
@@ -58,7 +58,7 @@ function register_iko_calculator_fields() {
                     ),
                     array(
                         'key' => 'field_ridge_coef',
-                        'label' => 'Коефіцієнт (гребінь)',
+                        'label' => 'Коефициент (било)',
                         'name' => 'ridge_coef',
                         'type' => 'number',
                         'step' => '0.1'
@@ -77,29 +77,29 @@ function register_iko_calculator_fields() {
         ),
     ));
 
-    // Група полів для стартових матеріалів
+    // Група полета за стартови материали
     acf_add_local_field_group(array(
         'key' => 'group_iko_starters',
-        'title' => 'IKO Starter Materials',
+        'title' => 'Стартови материали IKO',
         'fields' => array(
             array(
                 'key' => 'field_iko_starters',
-                'label' => 'Стартові матеріали',
+                'label' => 'Стартови материали',
                 'name' => 'iko_starters',
                 'type' => 'repeater',
                 'layout' => 'table',
-                'button_label' => 'Додати матеріал',
+                'button_label' => 'Добави материал',
                 'sub_fields' => array(
                     array(
                         'key' => 'field_starter_name',
-                        'label' => 'Назва',
+                        'label' => 'Име',
                         'name' => 'name',
                         'type' => 'text',
                         'required' => 1
                     ),
                     array(
                         'key' => 'field_starter_coef',
-                        'label' => 'Коефіцієнт',
+                        'label' => 'Коефициент',
                         'name' => 'coef',
                         'type' => 'number',
                         'step' => '0.1',
@@ -119,29 +119,29 @@ function register_iko_calculator_fields() {
         ),
     ));
 
-    // Група полів для матеріалів гребеня
+    // Група полета за материали за билото
     acf_add_local_field_group(array(
         'key' => 'group_iko_ridge_mats',
-        'title' => 'IKO Ridge Materials',
+        'title' => 'Материали за билото IKO',
         'fields' => array(
             array(
                 'key' => 'field_iko_ridge_mats',
-                'label' => 'Матеріали для гребеня',
+                'label' => 'Материали за билото',
                 'name' => 'iko_ridge_mats',
                 'type' => 'repeater',
                 'layout' => 'table',
-                'button_label' => 'Додати матеріал',
+                'button_label' => 'Добави материал',
                 'sub_fields' => array(
                     array(
                         'key' => 'field_ridge_mat_name',
-                        'label' => 'Назва',
+                        'label' => 'Име',
                         'name' => 'name',
                         'type' => 'text',
                         'required' => 1
                     ),
                     array(
                         'key' => 'field_ridge_mat_coef',
-                        'label' => 'Коефіцієнт',
+                        'label' => 'Коефициент',
                         'name' => 'coef',
                         'type' => 'number',
                         'step' => '0.1',
@@ -161,29 +161,29 @@ function register_iko_calculator_fields() {
         ),
     ));
 
-    // Група полів для підкладкових килимів
+    // Група полета за подложни килими
     acf_add_local_field_group(array(
         'key' => 'group_iko_underlays',
-        'title' => 'IKO Underlay Materials',
+        'title' => 'Подложни материали IKO',
         'fields' => array(
             array(
                 'key' => 'field_iko_underlays',
-                'label' => 'Підкладкові килими',
+                'label' => 'Подложни килими',
                 'name' => 'iko_underlays',
                 'type' => 'repeater',
                 'layout' => 'table',
-                'button_label' => 'Додати килим',
+                'button_label' => 'Добави килим',
                 'sub_fields' => array(
                     array(
                         'key' => 'field_underlay_name',
-                        'label' => 'Назва',
+                        'label' => 'Име',
                         'name' => 'name',
                         'type' => 'text',
                         'required' => 1
                     ),
                     array(
                         'key' => 'field_underlay_coef_high',
-                        'label' => 'Коеф. для крутих дахів',
+                        'label' => 'Коеф. за стръмни покриви',
                         'name' => 'coef_high',
                         'type' => 'number',
                         'step' => '0.1',
@@ -191,7 +191,7 @@ function register_iko_calculator_fields() {
                     ),
                     array(
                         'key' => 'field_underlay_coef_low',
-                        'label' => 'Коеф. для пологих дахів',
+                        'label' => 'Коеф. за полегати покриви',
                         'name' => 'coef_low',
                         'type' => 'number',
                         'step' => '0.1',
@@ -212,13 +212,13 @@ function register_iko_calculator_fields() {
     ));
 }
 
-// 2. Додавання сторінки налаштувань
+// 2. Добавяне на страница с настройки
 add_action('admin_menu', 'iko_add_admin_page');
 function iko_add_admin_page() {
     if (function_exists('acf_add_options_page')) {
         acf_add_options_page(array(
-            'page_title' => 'IKO Roof Calculator Settings',
-            'menu_title' => 'IKO Calculator',
+            'page_title' => 'Настройки на IKO Калкулатор за покрив',
+            'menu_title' => 'IKO Калкулатор',
             'menu_slug' => 'iko-new-calculator-settings',
             'capability' => 'manage_options',
             'icon_url' => 'dashicons-calculator',
@@ -227,9 +227,9 @@ function iko_add_admin_page() {
     }
 }
 
-// 3. Імпорт стандартних даних
+// 3. Импорт на стандартни данни
 function iko_import_default_data() {
-    // Колекції черепиці
+    // Колекции керемиди
     $shingles = array(
         array('name' => 'Cambridge Xtreme 9,5°', 'main_coef' => 2.17, 'ridge_coef' => 0),
         array('name' => 'Cambridge Xpress', 'main_coef' => 2.17, 'ridge_coef' => 0),
@@ -246,7 +246,7 @@ function iko_import_default_data() {
     );
     update_field('field_iko_shingles', $shingles, 'option');
 
-    // Стартові матеріали
+    // Стартови материали
     $starters = array(
         array('name' => 'Superglass - 3T', 'coef' => 14),
         array('name' => 'Starter Strip', 'coef' => 21),
@@ -262,7 +262,7 @@ function iko_import_default_data() {
     );
     update_field('field_iko_starters', $starters, 'option');
 
-    // Матеріали для гребеня
+    // Материали за билото
     $ridge_mats = array(
         array('name' => 'Superglass - 3T', 'coef' => 6),
         array('name' => 'Superglass – Hex', 'coef' => 8.9),
@@ -276,7 +276,7 @@ function iko_import_default_data() {
     );
     update_field('field_iko_ridge_mats', $ridge_mats, 'option');
 
-    // Підкладкові килими
+    // Подложни килими
     $underlays = array(
         array('name' => 'GO', 'coef_high' => 30, 'coef_low' => 15),
         array('name' => 'Pro', 'coef_high' => 30, 'coef_low' => 15),
@@ -285,29 +285,29 @@ function iko_import_default_data() {
     update_field('field_iko_underlays', $underlays, 'option');
 }
 
-// 4. Хук для активації та імпорту даних
+// 4. Хук за активиране и импорт на данни
 register_activation_hook(__FILE__, 'iko_calculator_activate');
 function iko_calculator_activate() {
-    // Перевірка, чи дані вже імпортовані
+    // Проверка дали данните вече са импортирани
     if (!get_field('iko_shingles', 'option')) {
         iko_import_default_data();
     }
 }
 
-// 5. Додаткові функції для управління даними
+// 5. Допълнителни функции за управление на данните
 add_action('admin_init', 'iko_add_data_management');
 function iko_add_data_management() {
-    // Кнопка для примусового імпорту даних
+    // Бутон за принудителен импорт на данни
     if (isset($_GET['force_iko_import']) && current_user_can('manage_options')) {
         iko_import_default_data();
         wp_redirect(admin_url('admin.php?page=iko-new-calculator-settings'));
         exit;
     }
 
-    // Додати кнопку в адмінку
+    // Добавяне на бутон в администрацията
     add_action('admin_notices', function() {
         echo '<div class="notice notice-info">';
-        echo '<p>Для примусового імпорту даних калькулятора: <a href="'.admin_url('?force_iko_import=1').'" class="button">Імпортувати дані</a></p>';
+        echo '<p>За принудителен импорт на данните на калкулатора: <a href="'.admin_url('?force_iko_import=1').'" class="button">Импортирай данни</a></p>';
         echo '</div>';
     });
 }
@@ -320,12 +320,12 @@ function iko_new_calculator_shortcode() {
     <div class="calc-section">
 
         <div class="iko-new-calculator-container">
-            <h1>Параметри розрахунку</h1>
+            <h1>Параметри на изчислението</h1>
 
             <div class="iko-new-form-group">
-                <label for="iko-new-collection">Оберіть колекцію бітумної черепиці:</label>
+                <label for="iko-new-collection">Изберете колекция битумни керемиди:</label>
                 <select id="iko-new-collection" required>
-                    <option value="">-- Оберіть --</option>
+                    <option value="">-- Изберете --</option>
                     <?php
                     $shingles = get_field('iko_shingles', 'option');
                     if($shingles) {
@@ -341,39 +341,39 @@ function iko_new_calculator_shortcode() {
             </div>
 
             <div class="iko-new-form-group">
-                <label for="iko-new-angle">Оберіть кут нахилу:</label>
+                <label for="iko-new-angle">Изберете наклон:</label>
                 <select id="iko-new-angle" required>
-                    <option value="">-- Оберіть --</option>
-                    <option value="9.5-20">від 9,5° до 20°</option>
-                    <option value="21-85">від 21° до 85°</option>
+                    <option value="">-- Изберете --</option>
+                    <option value="9.5-20">от 9,5° до 20°</option>
+                    <option value="21-85">от 21° до 85°</option>
                 </select>
             </div>
 
-            <h2>Схема даху для розрахунку</h2>
-            <img src="<?php echo IKO_CALCULATOR_URL; ?>calc-roof.webp" alt="Схема даху" class="iko-calc-img">
+            <h2>Схема на покрив за изчисление</h2>
+            <img src="<?php echo IKO_CALCULATOR_URL; ?>calc-roof.webp" alt="Схема на покрива" class="iko-calc-img">
             <div class="grid-3">
                 <div class="iko-new-form-group">
-                    <label for="iko-new-length">1. Довжина карнизу (м):</label>
+                    <label for="iko-new-length">1. Дължина на стрехата (м):</label>
                     <input type="number" id="iko-new-length" min="0.1" step="0.1" value="">
                 </div>
 
                 <div class="iko-new-form-group">
-                    <label for="iko-new-slope">2. Довжина схилу (м):</label>
+                    <label for="iko-new-slope">2. Дължина на склона (м):</label>
                     <input type="number" id="iko-new-slope" min="0.1" step="0.1" value="">
                 </div>
 
                 <div class="iko-new-form-group">
-                    <label for="iko-new-ridge">3. Довжина гребеня (м):</label>
+                    <label for="iko-new-ridge">3. Дължина на билото (м):</label>
                     <input type="number" id="iko-new-ridge" min="0.1" step="0.1" value="">
                 </div>
 
             </div>
 
 
-            <label>Оберіть матеріал на стартову полосу</label>
+            <label>Изберете материал за стартова лента</label>
             <div class="iko-new-form-group">
                 <select id="iko-new-starter" required>
-                    <option value="">-- Оберіть --</option>
+                    <option value="">-- Изберете --</option>
                     <?php
                     $starters = get_field('iko_starters', 'option');
                     if($starters) {
@@ -387,10 +387,10 @@ function iko_new_calculator_shortcode() {
                 </select>
             </div>
 
-            <label>Оберіть бітумну черепицю на гребінь</label>
+            <label>Изберете битумни керемиди за билото</label>
             <div class="iko-new-form-group">
                 <select id="iko-new-ridge-material" required>
-                    <option value="">-- Оберіть --</option>
+                    <option value="">-- Изберете --</option>
                     <?php
                     $ridge_mats = get_field('iko_ridge_mats', 'option');
                     if($ridge_mats) {
@@ -404,10 +404,10 @@ function iko_new_calculator_shortcode() {
                 </select>
             </div>
 
-            <label>Оберіть підкладковий килим</label>
+            <label>Изберете подложен килим</label>
             <div class="iko-new-form-group">
                 <select id="iko-new-underlay" required>
-                    <option value="">-- Оберіть --</option>
+                    <option value="">-- Изберете --</option>
                     <?php
                     $underlays = get_field('iko_underlays', 'option');
                     if($underlays) {
@@ -423,19 +423,19 @@ function iko_new_calculator_shortcode() {
             </div>
 
             <div class="iko-new-form-actions">
-                <button type="button" id="iko-new-reset" class="iko-new-btn">Скинути</button>
-                <button type="button" id="iko-new-calculate" class="iko-new-btn">Отримати результат</button>
+                <button type="button" id="iko-new-reset" class="iko-new-btn">Изчисти</button>
+                <button type="button" id="iko-new-calculate" class="iko-new-btn">Получете резултат</button>
             </div>
         </div>
 
         <div class="iko-new-results" id="iko-new-results">
-            <h2>Результат</h2>
+            <h2>Резултат</h2>
             <table class="iko-new-results-table">
                 <tbody id="iko-new-results-body">
                 <tr>
                     <td class="res-calc" colspan="2" style="text-align: center;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-500 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                        <span id="enter-params"> Введіть параметри для розрахунку</span>
+                        <span id="enter-params"> Въведете параметри за изчисление</span>
                     </td>
 
                 </tr>
@@ -451,11 +451,11 @@ function iko_new_calculator_shortcode() {
             const starterSelect = document.getElementById('iko-new-starter');
             const ridgeMaterialSelect = document.getElementById('iko-new-ridge-material');
 
-            // Зберігаємо всі оригінальні опції
+            // Запазваме всички оригинални опции
             const allStarterOptions = Array.from(starterSelect.options);
             const allRidgeOptions = Array.from(ridgeMaterialSelect.options);
 
-            // Визначаємо доступні матеріали для кожної колекції (з точними іменами)
+            // Определяме наличните материали за всяка колекция (с точни имена)
             const collectionMaterials = {
                 'Cambridge Xtreme 9,5°': {
                     starters: ['Superglass - 3T', 'Starter Strip'],
@@ -507,15 +507,15 @@ function iko_new_calculator_shortcode() {
                 }
             };
 
-            // Функція для конвертації числа з комою в точку
+            // Функция за конвертиране на число от запетая към точка
             function parseEuropeanNumber(numberString) {
                 if (!numberString) return 0;
-                // Замінюємо кому на точку та конвертуємо в число
+                // Заменяме запетаята с точка и конвертираме в число
                 const number = parseFloat(numberString.toString().replace(',', '.'));
                 return isNaN(number) ? 0 : number;
             }
 
-            // Оновлюємо доступні опції при зміні колекції
+            // Актуализираме наличните опции при промяна на колекцията
             collectionSelect.addEventListener('change', function() {
                 const selectedCollection = this.value;
                 updateMaterialOptions(selectedCollection);
@@ -524,20 +524,20 @@ function iko_new_calculator_shortcode() {
             function updateMaterialOptions(collection) {
                 const materials = collectionMaterials[collection] || { starters: [], ridgeMaterials: [] };
 
-                // Оновлюємо стартові матеріали
+                // Актуализираме стартовите материали
                 updateSelectOptions(starterSelect, materials.starters, allStarterOptions);
 
-                // Оновлюємо матеріали для гребеня
+                // Актуализираме материалите за билото
                 updateSelectOptions(ridgeMaterialSelect, materials.ridgeMaterials, allRidgeOptions);
             }
 
             function updateSelectOptions(select, allowedOptions, originalOptions) {
                 const currentValue = select.value;
 
-                // Очищаємо select
-                select.innerHTML = '<option value="">-- Оберіть --</option>';
+                // Изчистваме select
+                select.innerHTML = '<option value="">-- Изберете --</option>';
 
-                // Додаємо тільки дозволені опції
+                // Добавяме само позволените опции
                 allowedOptions.forEach(optionValue => {
                     const originalOption = originalOptions.find(opt => opt.value === optionValue);
                     if (originalOption) {
@@ -549,7 +549,7 @@ function iko_new_calculator_shortcode() {
                     }
                 });
 
-                // Відновлюємо попереднє значення, якщо воно дозволене
+                // Възстановяваме предишната стойност, ако е позволена
                 if (allowedOptions.includes(currentValue)) {
                     select.value = currentValue;
                 } else {
@@ -557,12 +557,12 @@ function iko_new_calculator_shortcode() {
                 }
             }
 
-            // Calculate button click
+            // Клик върху бутона за изчисление
             document.getElementById('iko-new-calculate').addEventListener('click', function() {
                 calculateMaterials();
             });
 
-            // Reset button click
+            // Клик върху бутона за изчистване
             document.getElementById('iko-new-reset').addEventListener('click', function() {
                 document.getElementById('iko-new-collection').value = '';
                 document.getElementById('iko-new-angle').value = '';
@@ -570,7 +570,7 @@ function iko_new_calculator_shortcode() {
                 document.getElementById('iko-new-slope').value = '';
                 document.getElementById('iko-new-ridge').value = '';
 
-                // Відновлюємо всі опції для стартерів та гребеня
+                // Възстановяваме всички опции за стартовите материали и билото
                 starterSelect.innerHTML = '';
                 allStarterOptions.forEach(option => {
                     starterSelect.appendChild(option.cloneNode(true));
@@ -587,7 +587,7 @@ function iko_new_calculator_shortcode() {
             <tr>
                <td class="res-calc" colspan="2" style="text-align: center;">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-500 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-        <span> Введіть параметри для розрахунку</span>
+        <span> Въведете параметри за изчисление</span>
         </td>
             </tr>
         `;
@@ -602,42 +602,42 @@ function iko_new_calculator_shortcode() {
 
                 // Validate inputs
                 if (!document.getElementById('iko-new-collection').value) {
-                    alert('Будь ласка, оберіть колекцію черепиці');
+                    alert('Моля, изберете колекция керемиди');
                     return;
                 }
 
                 if (!angle) {
-                    alert('Будь ласка, оберіть кут нахилу');
+                    alert('Моля, изберете наклон');
                     return;
                 }
 
                 if (!length || length <= 0) {
-                    alert('Будь ласка, введіть коректну довжину карнизу');
+                    alert('Моля, въведете коректна дължина на стрехата');
                     return;
                 }
 
                 if (!slope || slope <= 0) {
-                    alert('Будь ласка, введіть коректну довжину схилу');
+                    alert('Моля, въведете коректна дължина на склона');
                     return;
                 }
 
                 if (!ridge || ridge <= 0) {
-                    alert('Будь ласка, введіть коректну довжину гребеня');
+                    alert('Моля, въведете коректна дължина на билото');
                     return;
                 }
 
                 if (!document.getElementById('iko-new-starter').value) {
-                    alert('Будь ласка, оберіть матеріал на стартову полосу');
+                    alert('Моля, изберете материал за стартовата лента');
                     return;
                 }
 
                 if (!document.getElementById('iko-new-ridge-material').value) {
-                    alert('Будь ласка, оберіть черепицю на гребінь');
+                    alert('Моля, изберете керемиди за билото');
                     return;
                 }
 
                 if (!document.getElementById('iko-new-underlay').value) {
-                    alert('Будь ласка, оберіть підкладковий килим');
+                    alert('Моля, изберете подложен килим');
                     return;
                 }
 
@@ -657,19 +657,19 @@ function iko_new_calculator_shortcode() {
                 const underlay = document.getElementById('iko-new-underlay');
                 const selectedUnderlay = underlay.options[underlay.selectedIndex];
 
-                // Перевірка на нульові коефіцієнти
+                // Проверка за нулеви коефициенти
                 if (mainCoef === 0) {
-                    alert('Помилка: Коефіцієнт основної черепиці не може бути нульовим');
+                    alert('Грешка: Коефициентът на основните керемиди не може да бъде нулев');
                     return;
                 }
 
                 if (starterCoef === 0) {
-                    alert('Помилка: Коефіцієнт стартового матеріалу не може бути нульовим');
+                    alert('Грешка: Коефициентът на стартовия материал не може да бъде нулев');
                     return;
                 }
 
                 if (ridgeMaterialCoef === 0) {
-                    alert('Помилка: Коефіцієнт матеріалу гребеня не може бути нульовим');
+                    alert('Грешка: Коефициентът на материала за билото не може да бъде нулев');
                     return;
                 }
 
@@ -683,26 +683,26 @@ function iko_new_calculator_shortcode() {
                 let underlayType = '';
 
                 if (angle === "21-85") {
-                    // Для крутих дахів (21-85°) - коефіцієнт з поля coef_high
+                    // За стръмни покриви (21-85°) - коефициент от полето coef_high
                     const underlayCoefHigh = parseEuropeanNumber(selectedUnderlay.dataset.high);
                     if (underlayCoefHigh === 0) {
-                        alert('Помилка: Коефіцієнт підкладкового килима для крутих дахів не може бути нульовим');
+                        alert('Грешка: Коефициентът на подложния килим за стръмни покриви не може да бъде нулев');
                         return;
                     }
                     underlayRolls = Math.ceil(roofArea / underlayCoefHigh);
-                    underlayType = 'крутий дах (21-85°)';
+                    underlayType = 'стръмен покрив (21-85°)';
                 } else if (angle === "9.5-20") {
-                    // Для пологих дахів (9.5-20°) - коефіцієнт з поля coef_low
+                    // За полегати покриви (9.5-20°) - коефициент от полето coef_low
                     const underlayCoefLow = parseEuropeanNumber(selectedUnderlay.dataset.low);
                     if (underlayCoefLow === 0) {
-                        alert('Помилка: Коефіцієнт підкладкового килима для пологих дахів не може бути нульовим');
+                        alert('Грешка: Коефициентът на подложния килим за полегати покриви не може да бъде нулев');
                         return;
                     }
                     underlayRolls = Math.ceil(roofArea / underlayCoefLow);
-                    underlayType = 'пологий дах (9.5-20°)';
+                    underlayType = 'полегат покрив (9.5-20°)';
                 } else {
                     underlayRolls = 0;
-                    underlayType = 'невідомий кут';
+                    underlayType = 'неизвестен наклон';
                 }
 
                 const nailsKg = (roofArea / 15).toFixed(2);
@@ -713,47 +713,47 @@ function iko_new_calculator_shortcode() {
                 const resultsBody = document.getElementById('iko-new-results-body');
                 resultsBody.innerHTML = `
             <tr>
-                <td><span>Основна черепиця:</span> ${selectedCollection.value}</td>
+                <td><span>Основни керемиди:</span> ${selectedCollection.value}</td>
                 <td>${mainShingles} уп.</td>
             </tr>
             <tr>
-                <td><span>Стартова полоса: </span>${selectedStarter.value}</td>
+                <td><span>Стартова лента: </span>${selectedStarter.value}</td>
                 <td>${starterShingles} уп.</td>
             </tr>
             <tr>
-                <td><span>Гребінь:</span> ${selectedRidgeMaterial.value}</td>
+                <td><span>Било:</span> ${selectedRidgeMaterial.value}</td>
                 <td>${ridgeShingles} уп.</td>
             </tr>
             <tr>
-                <td><span>Підкладковий килим:</span> ${selectedUnderlay.value} (${underlayType})</td>
+                <td><span>Подложен килим:</span> ${selectedUnderlay.value} (${underlayType})</td>
                 <td>${underlayRolls} рул.</td>
             </tr>
             <tr>
-                <td>Вент. елемент гребеня</td>
-                <td>${ventilationMeters} пог. м.</td>
+                <td>Вент. елемент на билото</td>
+                <td>${ventilationMeters} л.м.</td>
             </tr>
             <tr>
-                <td>Клей</td>
+                <td>Лепило</td>
                 <td>${glueTubes} туб.</td>
             </tr>
             <tr>
-                <td>Цвяхи</td>
+                <td>Пирони</td>
                 <td>${nailsKg} кг</td>
             </tr>
             <tr style="background-color: white;">
-                <td><strong>Параметри розрахунку:</strong></td>
-                <td><strong>Значення</strong></td>
+                <td><strong>Параметри на изчислението:</strong></td>
+                <td><strong>Стойности</strong></td>
             </tr>
             <tr>
-                <td>Площа даху</td>
+                <td>Площ на покрива</td>
                 <td>${roofArea} м²</td>
             </tr>
             <tr>
-                <td>Кут нахилу</td>
+                <td>Наклон</td>
                 <td>${angle === "21-85" ? "21-85°" : "9.5-20°"}</td>
             </tr>
             <tr>
-                <td>Коефіцієнт підкладки</td>
+                <td>Коефициент на подложката</td>
                 <td>${angle === "21-85" ? parseEuropeanNumber(selectedUnderlay.dataset.high) : parseEuropeanNumber(selectedUnderlay.dataset.low)} м²/рул</td>
             </tr>
         `;
